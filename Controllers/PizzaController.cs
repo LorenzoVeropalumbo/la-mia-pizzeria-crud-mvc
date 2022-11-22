@@ -62,7 +62,7 @@ namespace la_mia_pizzeria_static.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(formData);
             }
 
             Pizza pizza = db.Pizzas.Where(post => post.Id == id).FirstOrDefault();
