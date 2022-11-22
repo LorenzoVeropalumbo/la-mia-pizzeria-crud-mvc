@@ -1,0 +1,150 @@
+﻿@{
+    Layout = "_layoutSnack";
+}
+
+<h1 class="Titlo">Snack Page</h1>
+<h3 class="Sub-titolo mb-4">In questa pagina potrai visualizzare tutti i miei snack</h3>
+
+<div class="container-fluid text-center">
+    <div class="row row-cols-3 align-items-start snack_page">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    1. Dichiarare una variabile valorizzandola con il nostro nome.
+                    Dichiarare un'altra variabile valorizzandola con il nostro cognome.
+                    Stampare il nostro nome e cognome all'interno di un tag h2.
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Risultato: </h5>
+                    <p class="card-text">
+                        @{
+                            string nome = "Lorenzo";
+                            string cognome = "Veropalumbo";
+                            <span>Ah. Quasi dimenticavo io mi chiamo @nome @cognome</span>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    2. Creare una funzione che stampa la somma dei numeri che vanno da 1 a n (con n passato come parametro - n incluso)
+                    Stampare dentro uno span il risultato.
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Risultato: </h5>
+                    <p class="card-text">
+                        @{
+                            int random = new Random().Next(1, 101);
+
+                            for (int i = 0; i <= random; i++)
+                            {
+                                if (i == random)
+                                {
+                                    <span>@i</span>
+                                }
+                                else
+                                {
+                                    <span>@i - </span>
+                                }
+
+                            }
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    3. Contare quante volte la lettera a è presente nalla frase "nel mezzo del cammin di nostra vita" e stampare questo valore in pagina
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Risultato: </h5>
+                    <p class="card-text">
+                        @{
+                            string frase = "nel mezzo del cammin di nostra vita";
+                            int j = 0;
+
+                            foreach (Char lettera in frase)
+                            {
+
+                                if (lettera == 'a')
+                                {
+                                    j++;
+                                }
+                            }
+
+                            <span>la lettera a è presente @j volte nella frase</span>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    4. Creare una List<int> di 20 numeri interi (generati random da 1 a 90, 1 e 90 inclusi) e mostrare in pagina solo i numeri compresi tra 20 e 70
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Risultato: </h5>
+                    <p class="card-text">
+                        @{
+
+                            List<int> ListaNumeri = new List<int>(20);
+                            for (int k = 0; k < 20; k++)
+                            {
+                                int random2 = new Random().Next(1, 91);
+                                ListaNumeri.Add(random2);
+                                if (random2 > 20 && random2 < 70)
+                                {
+                                    <span>@random2 </span>
+                                }
+                            }
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                     5. Stampare in pagina la data e l'ora attuale (usando la classe DateTime) con il formato anno-mese-giorno ore:minuti:secondi
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Risultato: </h5>
+                    <p class="card-text">
+                        @{
+                            <span>Data e ora di oggi: @DateTime.Now</span>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    6. Partendo dalla data di oggi (usando la classe DateTime) stampare in pagina <br>
+                    a. la data di 7 giorni fa <br>
+                    b. che giorno della settimana è oggi (il risultato dovrà essere il nome del giorno (Lunedì, Martedì, ...) <br>
+                    c. che giorno della settimana sarà nello stesso giorno e mese di oggi ma tra un anno (il risultato dovrà essere il nome del giorno (Lunedì, Martedì, ...)
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Risultato: </h5>
+                    <p class="card-text">
+                        @{
+                            <span>Data e ora di oggi: @DateTime.Now</span><br>
+                            <span>La data di 7 gioni fa è : @DateTime.Now.AddDays(-7)</span><br>
+                            <span> Oggi è : @DateTime.Now.ToString("dddd")</span><br>
+                            <span>tra un anno oggi sarà : @DateTime.Now.AddYears(1).ToString("dddd")</span>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="home_btn"><span class="btn btn-primary"><a asp-area="" asp-controller="Home" asp-action="Index">Torna alla home</a></span></div>

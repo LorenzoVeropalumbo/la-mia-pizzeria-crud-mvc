@@ -1,0 +1,115 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  padding: 0;
+  margin: 0;
+  box-sizing:border-box;
+}
+
+.Titolo, .Sub-titolo {
+    font-size: 25px;
+}
+
+.home a{
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+}
+
+main{
+    width: 100%;
+}
+
+/* HOME LAYOUT*/
+.layout_home{
+    width: 20%;
+    background-color: gold;
+    height: 100vh;
+    padding-block: 50px;
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.layout_home ul li{
+    padding-left: 18px;
+}
+
+.layout_home ul li *{
+    vertical-align:baseline;
+}
+
+.layout_home ul li i{
+    font-size: 30px;
+    padding-right: 12px;
+}
+/*SNACK PAGE*/
+.snack_page{
+    margin-left: 20px;
+}
+
+.snack_page .col .card{
+    height: 380px;
+    margin-top: 50px;
+}
+
+.home_btn{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.home_btn a{
+    font-size: 24px;
+    color: white;
+    text-decoration: none;
+}
+/*PIZZE INDEX*/
+.pizze_index .col {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    max-width: 350px;
+    flex-grow: 0;
+    height: 400px;
+}
+
+.pizze_index .pizza_card span.line {
+    width: 300px;
+    height: 1px;
+    background-color: black;
+}
+.pizze_index .pizza_card h3 {
+    margin-bottom: 0;
+}
+.pizze_index .pizza_card span {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.pizze_index .pizza_card .price {
+    font-size: 22px;
+    font-weight: 700;
+    color: firebrick;
+}
+
+.pizze_index .pizza_card i {
+    color: orange;
+}
+
