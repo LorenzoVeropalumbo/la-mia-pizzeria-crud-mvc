@@ -47,7 +47,7 @@ namespace la_mia_pizzeria_static.Controllers
 
         public IActionResult Update(int id)
         {
-            Pizza pizza = db.Pizzas.Where(post => post.Id == id).FirstOrDefault();
+            Pizza pizza = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
 
             if (pizza == null)
                 return NotFound();
@@ -65,7 +65,7 @@ namespace la_mia_pizzeria_static.Controllers
                 return View(formData);
             }
 
-            Pizza pizza = db.Pizzas.Where(post => post.Id == id).FirstOrDefault();
+            Pizza pizza = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
 
             if (pizza == null)
             {
