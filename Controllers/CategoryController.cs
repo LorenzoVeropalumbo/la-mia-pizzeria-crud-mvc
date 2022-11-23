@@ -37,6 +37,41 @@ namespace la_mia_pizzeria_static.Controllers
 
             return RedirectToAction("Index");
         }
+        public IActionResult Update(int id)
+        {
+            Category category = db.Categories.Where(c => c.Id == id).FirstOrDefault();
+
+            if (category == null)
+                return NotFound();
+
+            return View(category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(int id, Category Updatecategory)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(Updatecategory);
+            }
+
+            Category category = db.Categories.Where(c => c.Id == id).FirstOrDefault();
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            category.Title = Updatecategory.Title;
+
+            db.Categories.Update(category);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -52,7 +87,7 @@ namespace la_mia_pizzeria_static.Controllers
 
             foreach (Pizza pizza in pizzas)
             {
-                pizza.CategoryId = 5;
+                pizza.CategoryId = 1;
             }
             db.Categories.Remove(category);
             db.SaveChanges();
