@@ -26,6 +26,11 @@ namespace la_mia_pizzeria_static.Models
         [Range(1, 99.99, ErrorMessage = "Il prezzo non può essere superiore a 99,99$ o inferiore di 1$")]
         public float Price { get; set; }
 
+
+        //relazione 1 a n con Category
+        public int CategoryId { get; set; }
+        public Category? Category { get; set; }
+
         public Pizza()
         {
 
