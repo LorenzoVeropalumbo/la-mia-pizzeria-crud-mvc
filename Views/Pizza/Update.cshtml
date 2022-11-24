@@ -41,6 +41,14 @@
                     <span asp-validation-for="Pizza.Description" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
+                    <strong>Tag:</strong>
+                    <select asp-for="SelectedIngredients"
+                            asp-items="@Model.Ingredients"
+                            multiple="multiple"
+                            class="form-control mb-2 mr-sm-2 ml-sm-3 leftList">
+                    </select>
+                </div>
+                <div class="mb-3">
                     <strong>Prezzo:</strong>
                     <input asp-for="Pizza.Price" class="d-block w-100">
                     <span asp-validation-for="Pizza.Price" class="text-danger"></span>

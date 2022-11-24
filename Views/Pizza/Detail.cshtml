@@ -13,6 +13,27 @@
         </span>
         <p>@Model.Category.Title</p>
         <p>@Model.Description</p>
+        <p>
+            <strong>Ingredients:</strong>
+            @{
+                if(@Model.Ingredients.Count() <= 0)
+                {
+                        <div>
+                            <span class="badge bg-danger" style="width: 350px; font-size: 18px">Non sono stati selezionati ingredienti</span>
+                        </div>
+                }
+                else
+                {
+                        @foreach (Ingredient ingredient in Model.Ingredients)
+                    {
+                            <div>
+                            <span class="badge bg-primary" style="width: 150px; font-size: 15px">@ingredient.Title</span>
+                            </div>
+                    }
+                }
+            }
+
+        </p>
         <h3>@Model.Title</h3>
         <p><span class="price">$@Model.Price</span></p>
     </div>

@@ -1,4 +1,5 @@
-﻿using la_mia_pizzeria_static.Models;
+﻿using Azure;
+using la_mia_pizzeria_static.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
@@ -8,6 +9,8 @@ namespace la_mia_pizzeria_static.Data
     {
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Ingredient> ingredients { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
