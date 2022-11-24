@@ -78,14 +78,13 @@ namespace la_mia_pizzeria_static.Controllers
         public IActionResult Delete(int id)
         {
             Category category = db.Categories.Where(c => c.Id == id).FirstOrDefault();
-            List<Pizza> pizzas = db.Pizzas.Where(c => c.CategoryId == id).ToList();
             
             if (category == null)
             {
                 return NotFound();
             }
 
-            foreach (Pizza pizza in pizzas)
+            foreach (Pizza pizza in category.Pizzas)
             {
                 pizza.CategoryId = 1;
             }
