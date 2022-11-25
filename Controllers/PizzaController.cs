@@ -2,6 +2,7 @@
 using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models;
 using la_mia_pizzeria_static.Models.FormData;
+using la_mia_pizzeria_static.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
@@ -13,11 +14,11 @@ namespace la_mia_pizzeria_static.Controllers
     public class PizzaController : Controller
     {
         public PizzaDbContext db = new PizzaDbContext();
+        IdbPizzeriaRepository DbPizzeriaRepository = new DbPizzeriaRepository();
 
         public IActionResult Index()
-        {          
-
-            List<Pizza> listOfPizzas = db.Pizzas.ToList();
+        {
+            List<Pizza> listOfPizzas = DbPizzeriaRepository.All();
 
             return View(listOfPizzas);
         }
@@ -25,7 +26,7 @@ namespace la_mia_pizzeria_static.Controllers
         public IActionResult Detail(int id)
         {
 
-            Pizza pizza = db.Pizzas.Where(p => p.Id == id).Include(p => p.Category).Include(i => i.Ingredients).FirstOrDefault();
+            Pizza pizza = DbPizzeriaRepository.GetById(id);
 
             if (pizza == null)
             {
@@ -58,6 +59,7 @@ namespace la_mia_pizzeria_static.Controllers
             if (!ModelState.IsValid)
             {
                 formData.Categories = db.Categories.ToList();
+                
                 formData.Ingredients = new List<SelectListItem>();
                 List<Ingredient> ingredients = db.ingredients.ToList();
 
@@ -67,16 +69,8 @@ namespace la_mia_pizzeria_static.Controllers
                 }
                 return View(formData);
             }
-            
-            formData.Pizza.Ingredients = new List<Ingredient>();
-            foreach (int ingredientId in formData.SelectedIngredients)
-            {
-                Ingredient ingredientItem = db.ingredients.Where(i => i.Id == ingredientId).FirstOrDefault();
-                formData.Pizza.Ingredients.Add(ingredientItem);
-            }
 
-            db.Pizzas.Add(formData.Pizza);
-            db.SaveChanges();
+            DbPizzeriaRepository.Create(formData.Pizza, formData.SelectedIngredients);
 
             return RedirectToAction("Detail", new { Id = formData.Pizza.Id });
         }
@@ -171,8 +165,7 @@ namespace la_mia_pizzeria_static.Controllers
                 return NotFound();
             }
 
-            db.Pizzas.Remove(pizza);
-            db.SaveChanges();
+            DbPizzeriaRepository.Delete(pizza);
 
 
             return RedirectToAction("Index");
