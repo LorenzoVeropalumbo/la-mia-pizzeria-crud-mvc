@@ -13,12 +13,18 @@ namespace la_mia_pizzeria_static.Controllers
 {
     public class PizzaController : Controller
     {
-        public PizzaDbContext db = new PizzaDbContext();
-        IdbPizzeriaRepository DbPizzeriaRepository = new DbPizzeriaRepository();
+        public PizzaDbContext db;
+        IdbPizzeriaRepository pizzaRepository;
 
+        public PizzaController(IdbPizzeriaRepository _pizzaRepository) : base()
+        {
+            db = new PizzaDbContext();
+
+            pizzaRepository = _pizzaRepository;
+        }
         public IActionResult Index()
         {
-            List<Pizza> listOfPizzas = DbPizzeriaRepository.All();
+            List<Pizza> listOfPizzas = pizzaRepository.All();
 
             return View(listOfPizzas);
         }
@@ -26,7 +32,7 @@ namespace la_mia_pizzeria_static.Controllers
         public IActionResult Detail(int id)
         {
 
-            Pizza pizza = DbPizzeriaRepository.GetById(id);
+            Pizza pizza = pizzaRepository.GetById(id);
 
             if (pizza == null)
             {
@@ -70,7 +76,7 @@ namespace la_mia_pizzeria_static.Controllers
                 return View(formData);
             }
 
-            DbPizzeriaRepository.Create(formData.Pizza, formData.SelectedIngredients);
+            pizzaRepository.Create(formData.Pizza, formData.SelectedIngredients);
 
             return RedirectToAction("Detail", new { Id = formData.Pizza.Id });
         }
@@ -102,7 +108,6 @@ namespace la_mia_pizzeria_static.Controllers
         public IActionResult Update(int id, FormData formData)
         {
 
-
             if (!ModelState.IsValid)
             {
                 formData.Pizza.Id = id;
@@ -121,7 +126,7 @@ namespace la_mia_pizzeria_static.Controllers
             }
 
             //update esplicito con nuovo oggetto
-            Pizza pizzaItem = db.Pizzas.Where(pizza => pizza.Id == id).Include(i => i.Ingredients).FirstOrDefault();
+            Pizza pizzaItem = pizzaRepository.GetById(id);
 
             if (pizzaItem == null)
             {
@@ -129,26 +134,7 @@ namespace la_mia_pizzeria_static.Controllers
             }
 
 
-            pizzaItem.Title = formData.Pizza.Title;
-            pizzaItem.Description = formData.Pizza.Description;
-            pizzaItem.Image = formData.Pizza.Image;
-            pizzaItem.Price = formData.Pizza.Price;
-            pizzaItem.CategoryId = formData.Pizza.CategoryId;
-
-            pizzaItem.Ingredients.Clear();
-
-            if (formData.SelectedIngredients == null)
-            {
-                formData.SelectedIngredients = new List<int>();
-            }
-
-            foreach (int IngredientId in formData.SelectedIngredients)
-            {
-                Ingredient ingredient = db.ingredients.Where(t => t.Id == IngredientId).FirstOrDefault();
-                pizzaItem.Ingredients.Add(ingredient);
-            }
-
-            db.SaveChanges();
+            pizzaRepository.Update(pizzaItem, formData.Pizza, formData.SelectedIngredients);
 
             return RedirectToAction("Index");
         }
@@ -165,7 +151,7 @@ namespace la_mia_pizzeria_static.Controllers
                 return NotFound();
             }
 
-            DbPizzeriaRepository.Delete(pizza);
+            pizzaRepository.Delete(pizza);
 
 
             return RedirectToAction("Index");

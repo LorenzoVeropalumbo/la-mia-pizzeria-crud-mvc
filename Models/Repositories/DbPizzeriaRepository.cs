@@ -1,4 +1,5 @@
-﻿using la_mia_pizzeria_static.Data;
+﻿using Azure;
+using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models.FormData;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -47,7 +48,28 @@ namespace la_mia_pizzeria_static.Models.Repositories
 
         public void Update(Pizza pizza, Pizza formData, List<int>? selectedIngredients)
         {
-            throw new NotImplementedException();
+            if (selectedIngredients == null)
+            {
+                selectedIngredients = new List<int>();
+            }
+
+
+            pizza.Title = formData.Title;
+            pizza.Description = formData.Description;
+            pizza.Image = formData.Image;
+            pizza.CategoryId = formData.CategoryId;
+            pizza.Price = formData.Price;
+
+            pizza.Ingredients.Clear();
+
+
+            foreach (int ingredientId in selectedIngredients)
+            {
+                Ingredient ingredient = db.ingredients.Where(i => i.Id == ingredientId).FirstOrDefault();
+                pizza.Ingredients.Add(ingredient);
+            }
+
+            db.SaveChanges();
         }
 
     }
